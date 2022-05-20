@@ -33,16 +33,39 @@ const addStdToTable = (index, student) => {
   tableBody.appendChild(row);
 };
 
+const addStdToTableImg = (index, student) => {
+  let tableBody = document.getElementById("tableBody");
+  let row = document.createElement("tr");
+  let cell = document.createElement("td");
+  let img = document.createElement('img')
+  img.src = student.imageLink;
+  img.setAttribute('width', '70px');
+  img.setAttribute('height', '100px');
+  cell.setAttribute("scope", "row");
+  cell.innerHTML = index;
+  row.appendChild(cell);
+  cell = document.createElement("td");
+  cell.innerHTML = student.name;
+  row.appendChild(cell);
+  cell = document.createElement("td");
+  cell.appendChild(img);
+  row.appendChild(cell);
+  cell = document.createElement("td");
+  cell.innerHTML = student.gender;
+  row.appendChild(cell);
+  tableBody.appendChild(row);
+};
+
 function onLoad() {
   // let student;
-  fetch("/asset 1/students.json")
+  fetch("/asset1/students2.json")
     .then((response) => {
       return response.json();
     })
     .then((data) => {
       console.log(data);
       data.forEach((v, i) => {
-        addStdToTable(i + 1, v);
+        addStdToTableImg(i + 1, v);
       })
     });
 }
