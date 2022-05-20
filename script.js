@@ -38,7 +38,7 @@ const addStdToTableImg = (index, student) => {
   let row = document.createElement("tr");
   let cell = document.createElement("td");
   let img = document.createElement('img')
-  img.src = student.imageLink;
+  img.src = student.image;
   img.setAttribute('width', '70px');
   img.setAttribute('height', '100px');
   cell.setAttribute("scope", "row");
@@ -51,14 +51,14 @@ const addStdToTableImg = (index, student) => {
   cell.appendChild(img);
   row.appendChild(cell);
   cell = document.createElement("td");
-  cell.innerHTML = student.gender;
+  cell.innerHTML = student.surname;
   row.appendChild(cell);
   tableBody.appendChild(row);
 };
 
 function onLoad() {
   // let student;
-  fetch("/asset1/students2.json")
+  fetch("https://dv-student-backend-2019.appspot.com/students")
     .then((response) => {
       return response.json();
     })
