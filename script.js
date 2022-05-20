@@ -3,6 +3,11 @@ student.name = "คุณลุง";
 student.username = "a@b.com";
 student.gender = "ชาย";
 
+let student2 = {};
+student2.name = "John";
+student2.username = "commmm";
+student2.gender = "หญิง";
+
 const addStudent = (student, prefix) => {
   const output = document.getElementById("output");
   let row = document.createElement("div");
@@ -21,6 +26,10 @@ const addStudent = (student, prefix) => {
 
 window.addEventListener("load", () => {
   addStudent(student.name, "ชื่อ");
-  addStudent(student.username, "อีเมล");
+  addStudent(student.username, "ยูสเสอร์");
   addStudent(student.gender, "เพศ");
+
+  addStudent(student2.name, "ชื่อ");
+  addStudent(student2.username, "ยูสเสอร์");
+  addStudent(student2.gender, "เพศ");
 });
