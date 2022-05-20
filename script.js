@@ -8,6 +8,16 @@ student2.name = "John";
 student2.username = "commmm";
 student2.gender = "หญิง";
 
+const students = [
+  student,
+  student2,
+  {
+    name: "คุณลุง3",
+    username: "usenrame",
+    gender: "female",
+  },
+];
+
 const addStudent = (student, prefix) => {
   const output = document.getElementById("output");
   let row = document.createElement("div");
@@ -25,11 +35,9 @@ const addStudent = (student, prefix) => {
 };
 
 window.addEventListener("load", () => {
-  addStudent(student.name, "ชื่อ");
-  addStudent(student.username, "ยูสเสอร์");
-  addStudent(student.gender, "เพศ");
-
-  addStudent(student2.name, "ชื่อ");
-  addStudent(student2.username, "ยูสเสอร์");
-  addStudent(student2.gender, "เพศ");
+  students.forEach((std) => {
+    addStudent(std.name, "ชื่อ");
+    addStudent(std.username, "ยูสเสอร์");
+    addStudent(std.gender, "เพศ");
+  });
 });
