@@ -1,0 +1,5 @@
+GET https://dv-student-backend-2019.appspot.com/students
+
+###
+
+GET https://dv-student-backend-2019.appspot.com/student
