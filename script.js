@@ -34,10 +34,27 @@ const addStudent = (student, prefix) => {
   output.appendChild(row);
 };
 
+const addStdToTable = (index, student) => {
+  let tableBody = document.getElementById("tableBody");
+  let row = document.createElement("tr");
+  let cell = document.createElement("td");
+  cell.setAttribute('scope','row')
+  cell.innerHTML = index
+  row.appendChild(cell);
+  cell = document.createElement("td");
+  cell.innerHTML = student.name
+  row.appendChild(cell);
+  cell = document.createElement("td");
+  cell.innerHTML = student.username
+  row.appendChild(cell);
+  cell = document.createElement("td");
+  cell.innerHTML = student.gender
+  row.appendChild(cell)
+  tableBody.appendChild(row)
+}
+
 window.addEventListener("load", () => {
-  students.forEach((std) => {
-    addStudent(std.name, "ชื่อ");
-    addStudent(std.username, "ยูสเสอร์");
-    addStudent(std.gender, "เพศ");
+  students.forEach((std,i) => {
+  addStdToTable(i+1,std)
   });
 });
