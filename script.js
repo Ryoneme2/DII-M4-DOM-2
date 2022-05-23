@@ -2,6 +2,9 @@ const btn = document.getElementById("btn");
 const btnSubmit = document.getElementById("btn-submit");
 var index = 1;
 
+
+const 
+
 const addStudent = (student, prefix) => {
   const output = document.getElementById("output");
   let row = document.createElement("div");
@@ -19,6 +22,7 @@ const addStudent = (student, prefix) => {
 };
 
 function addStudentData(student) {
+  console.log(student);
   let idElem = document.getElementById("id");
   idElem.innerHTML = student.id;
   let studentIdElem = document.getElementById("studentId");
@@ -55,8 +59,9 @@ const addStdToTableImg = (index, student) => {
   let row = document.createElement("tr");
   let cell = document.createElement("td");
   let img = document.createElement("img");
+  let btnCell = document.createElement("button");
   img.src = student.image;
-  img.setAttribute("width", "70px");
+  // img.setAttribute("width", "70px");
   img.setAttribute("height", "100px");
   cell.setAttribute("scope", "row");
   cell.innerHTML = index;
@@ -70,6 +75,14 @@ const addStdToTableImg = (index, student) => {
   cell = document.createElement("td");
   cell.innerHTML = student.surname;
   row.appendChild(cell);
+  cell = document.createElement("td");
+  btnCell.innerHTML = 'delete'
+  btnCell.setAttribute("id", 'btn-delete');
+  btnCell.setAttribute("onclick", `detById(${student.id})`);
+  btnCell.classList.add('btn')
+  btnCell.classList.add('btn-danger')
+  cell.appendChild(btnCell);
+  row.appendChild(cell);
   tableBody.appendChild(row);
 };
 
@@ -82,15 +95,42 @@ const addStdToDb = (student) => {
     },
   })
     .then((response) => {
-      if(response.ok) {
+      if (response.ok) {
         return response.json();
       }
       throw new Error("Add std failed");
     })
     .then((data) => {
       console.log(data);
-    }).catch((e) => console.error(e));
+      addStudentData(data);
+    })
+    .catch((e) => console.error(e));
 };
+
+const detById = (id) => {
+  const conf = confirm("คุณต้องการลบข้อมูลนี้หรือไม่");
+  if (conf) {
+    fetch(`https://dv-student-backend-2019.appspot.com/student/${id}`,
+  {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Get std failed");
+    })
+    .then((data) => {
+      onLoad()
+    })
+    .catch((e) => console.error(e));
+  } else {
+    return;
+  }
+}
 
 const delTheerakarn = async (student) => {
   const res = await fetch(
@@ -116,7 +156,6 @@ const delTheerakarn = async (student) => {
       `https://dv-student-backend-2019.appspot.com/student/${v}`,
       {
         method: "DELETE",
-        body: JSON.stringify(student),
         headers: {
           "Content-Type": "application/json",
         },
@@ -131,6 +170,7 @@ const delTheerakarn = async (student) => {
 };
 
 function onLoad() {
+  document.getElementById("tableBody").innerHTML= '';
   fetch("https://dv-student-backend-2019.appspot.com/students")
     .then((response) => {
       return response.json();
@@ -175,14 +215,12 @@ function onLoad() {
 
 btnSubmit.addEventListener("click", () => {
   const dataStd = {
-    studentId: document.getElementById("stdId").value,
-    name: document.getElementById("name").value,
-    surname: document.getElementById("surname").value,
-    gpa: parseInt(document.getElementById("gpa").value),
-    image: document.getElementById("image").value,
+    studentId: document.getElementById("stdIdInput").value,
+    name: document.getElementById("nameInput").value,
+    surname: document.getElementById("surnameInput").value,
+    gpa: parseInt(document.getElementById("gpaInput").value),
+    image: document.getElementById("imageInput").value,
   };
 
-  for(let i = 0; i < 150; i++){
-    addStdToDb(dataStd);
-  }
+  addStdToDb(dataStd);
 });
