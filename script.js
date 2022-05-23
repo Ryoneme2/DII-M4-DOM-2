@@ -2,8 +2,29 @@ const btn = document.getElementById("btn");
 const btnSubmit = document.getElementById("btn-submit");
 var index = 1;
 
+const singleStudentResult = document.getElementById("sinigle_student_result");
+const listStudentResult = document.getElementById("output");
+const addUserDetail = document.getElementById("addUserDetail");
+const AllStudentMenu = document.getElementById("AllStudentMenu");
+const AddMenu = document.getElementById("AddMenu");
+const AddStudent = document.getElementById("AddStudent");
 
-const 
+AllStudentMenu.addEventListener("click", () => {
+  listStudentResult.style.display = "block";
+  showStdData();
+});
+AddMenu.addEventListener("click", () => {
+  addUserDetail.style.display = "block";
+});
+// AddStudent.addEventListener("click", () => {
+//   singleStudentResult.style.display = "block";
+// })
+
+const hideAll = () => {
+  singleStudentResult.style.display = "none";
+  listStudentResult.style.display = "none";
+  addUserDetail.style.display = "none";
+};
 
 const addStudent = (student, prefix) => {
   const output = document.getElementById("output");
@@ -60,6 +81,7 @@ const addStdToTableImg = (index, student) => {
   let cell = document.createElement("td");
   let img = document.createElement("img");
   let btnCell = document.createElement("button");
+  let btnCell2 = document.createElement("button");
   img.src = student.image;
   // img.setAttribute("width", "70px");
   img.setAttribute("height", "100px");
@@ -76,11 +98,20 @@ const addStdToTableImg = (index, student) => {
   cell.innerHTML = student.surname;
   row.appendChild(cell);
   cell = document.createElement("td");
-  btnCell.innerHTML = 'delete'
-  btnCell.setAttribute("id", 'btn-delete');
+  btnCell2.innerHTML = "show Info";
+  btnCell2.setAttribute("id", "btn-info");
+  btnCell2.setAttribute("onclick", `showSingleInfo(${student.id})`);
+  btnCell2.classList.add("btn");
+  btnCell2.classList.add("btn-info");
+  btnCell2.classList.add("text-white");
+  cell.appendChild(btnCell2);
+  row.appendChild(cell);
+  cell = document.createElement("td");
+  btnCell.innerHTML = "delete";
+  btnCell.setAttribute("id", "btn-delete");
   btnCell.setAttribute("onclick", `detById(${student.id})`);
-  btnCell.classList.add('btn')
-  btnCell.classList.add('btn-danger')
+  btnCell.classList.add("btn");
+  btnCell.classList.add("btn-danger");
   cell.appendChild(btnCell);
   row.appendChild(cell);
   tableBody.appendChild(row);
@@ -110,27 +141,26 @@ const addStdToDb = (student) => {
 const detById = (id) => {
   const conf = confirm("คุณต้องการลบข้อมูลนี้หรือไม่");
   if (conf) {
-    fetch(`https://dv-student-backend-2019.appspot.com/student/${id}`,
-  {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error("Get std failed");
+    fetch(`https://dv-student-backend-2019.appspot.com/student/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    .then((data) => {
-      onLoad()
-    })
-    .catch((e) => console.error(e));
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Get std failed");
+      })
+      .then((data) => {
+        onLoad();
+      })
+      .catch((e) => console.error(e));
   } else {
     return;
   }
-}
+};
 
 const delTheerakarn = async (student) => {
   const res = await fetch(
@@ -169,8 +199,8 @@ const delTheerakarn = async (student) => {
   });
 };
 
-function onLoad() {
-  document.getElementById("tableBody").innerHTML= '';
+const showStdData = () => {
+  document.getElementById("tableBody").innerHTML = "";
   fetch("https://dv-student-backend-2019.appspot.com/students")
     .then((response) => {
       return response.json();
@@ -182,36 +212,43 @@ function onLoad() {
         addStdToTableImg(i + 1, v);
       });
     });
+};
 
-  // const dataStd = {
-  //   studentId: "642110319",
-  //   name: "Theerakarn",
-  //   surname: "Maiwong",
-  //   gpa: 5.0,
-  //   image: "https://avatars.githubusercontent.com/u/75056575?v=4",
-  // };
-
-  // addStdToDb(dataStd);
+function onLoad() {
+  hideAll();
 }
 
-// btn.addEventListener("click", () => {
-// const input = document.getElementById("input-text").value;
+const showSingleInfo = (id) => {
+  document.getElementById("sinigle_student_result").style.display = "block";
+  fetch(`https://dv-student-backend-2019.appspot.com/student/${id}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      // addStdToTableImg(index, data);
+      addStudentData(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
-// fetch(`https://dv-student-backend-2019.appspot.com/student/${input}`)
-//   .then((response) => {
-//     return response.json();
-//   })
-//   .then((data) => {
-//     addStdToTableImg(index, data);
-//     addStudentData(data);
-//     index++;
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
+btn.addEventListener("click", () => {
+  const input = document.getElementById("input-text").value;
 
-//   delTheerakarn();
-// });
+  fetch(`https://dv-student-backend-2019.appspot.com/student/${input}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      // addStdToTableImg(index, data);
+      addStudentData(data);
+      index++;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+});
 
 btnSubmit.addEventListener("click", () => {
   const dataStd = {

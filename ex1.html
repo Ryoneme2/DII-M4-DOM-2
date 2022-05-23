@@ -73,13 +73,6 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
-              src="https://github.com/mdo.png"
-              alt="mdo"
-              width="32"
-              height="32"
-              class="rounded-circle"
-            />
           </a>
           <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
             <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -147,25 +140,32 @@
       </form>
     </div>
 
-    <div class="container my-3">
+    <ul class="nav col-12 me-auto justify-content-center mb-0">
+      <li><a href="#" class="nav-link px-2 link-secondary" id="AllStudentMenu">All list</a></li>
+      <li><a href="#" class="nav-link px-2 link-secondary" id="AddMenu">Search</a></li>
+      <li><a href="#" class="nav-link px-2 link-secondary" id="AddStudent">Add New</a></li>
+      <li><a href="#" class="nav-link px-2 link-secondary">Product</a></li>
+    </ul>
+
+    <div class="container my-3" id="addUserDetail">
       <div class="form-floating my-2">
-        <input type="text" class="form-control" id="name" placeholder="Password">
+        <input type="text" class="form-control" id="nameInput" placeholder="Password">
         <label for="name">Name</label>
       </div>
       <div class="form-floating my-2">
-        <input type="text" class="form-control" id="surname" placeholder="Password">
+        <input type="text" class="form-control" id="surnameInput" placeholder="Password">
         <label for="surname">Surname</label>
       </div>
       <div class="form-floating my-2">
-        <input type="text" class="form-control" id="stdId" placeholder="Password">
+        <input type="text" class="form-control" id="stdIdInput" placeholder="Password">
         <label for="stdId">Student ID</label>
       </div>
       <div class="form-floating my-2">
-        <input type="text" class="form-control" id="gpa" placeholder="Password">
+        <input type="text" class="form-control" id="gpaInput" placeholder="Password">
         <label for="gpa">GPA</label>
       </div>
       <div class="form-floating my-2">
-        <input type="text" class="form-control" id="image" placeholder="Password">
+        <input type="text" class="form-control" id="imageInput" placeholder="Password">
         <label for="image">LINK IMAGE</label>
       </div>
 
@@ -217,18 +217,22 @@
 
     
 
-    <div class="d-flex justify-content-center" id="output">
-      <table class="table table-striped w-75">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+    <div id="output">
+      <div class="d-flex justify-content-center" >
+        <table class="table table-striped w-75">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+              <th scope="col">info</th>
+              <th scope="col">delete</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
