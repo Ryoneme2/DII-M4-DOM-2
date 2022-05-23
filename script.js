@@ -1,3 +1,6 @@
+const btn = document.getElementById("btn");
+var index = 1
+
 const addStudent = (student, prefix) => {
   const output = document.getElementById("output");
   let row = document.createElement("div");
@@ -69,3 +72,19 @@ function onLoad() {
       })
     });
 }
+
+btn.addEventListener("click", () => {
+  const input = document.getElementById("input-text").value;
+
+  fetch(`https://dv-student-backend-2019.appspot.com/student/${input}`)
+  .then((response) => {
+    return response.json()
+  })
+  .then((data) => {
+    addStdToTableImg(index, data);
+    index++
+  }).catch((err) => {
+    console.error(err);
+  })
+})
+
